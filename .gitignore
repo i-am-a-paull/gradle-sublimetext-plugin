@@ -1,0 +1,9 @@
+*.sublime-*
+.DS_Store
+.gradle
+.project
+.pydevproject
+.classpath
+.settings
+build
+bin
