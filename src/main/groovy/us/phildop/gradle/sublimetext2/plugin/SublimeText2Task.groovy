@@ -11,6 +11,7 @@ class SublimeText2Task extends DefaultTask {
   List<String> defaultFolderExcludePatterns
   boolean addDependencyProjects
   boolean generateSublimeJavaClasspath
+  boolean addGradleCompile
 
   @TaskAction
   void run() {
@@ -18,7 +19,8 @@ class SublimeText2Task extends DefaultTask {
                                      getDefaultFileExcludePatterns(), 
                                      getDefaultFolderExcludePatterns(), 
                                      getAddDependencyProjects(), 
-                                     getGenerateSublimeJavaClasspath())
+                                     getGenerateSublimeJavaClasspath(),
+                                     getAddGradleCompile())
     File destination = new File(project.projectDir, String.format("%s.sublime-project", getSublimeProjectName()))
     destination.write st2Proj.toString()
   }

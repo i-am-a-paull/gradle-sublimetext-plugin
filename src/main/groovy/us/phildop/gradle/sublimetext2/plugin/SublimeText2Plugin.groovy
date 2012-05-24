@@ -31,6 +31,10 @@ class SublimeText2Plugin implements Plugin<Project> {
         project.hasProperty("generateSublimeJavaClasspath") ? project.property("generateSublimeJavaClasspath")
                                                             : extension.generateSublimeJavaClasspath
       }
+      conventionMapping.addGradleCompile = {
+        project.hasProperty("addGradleCompile") ? project.property("addGradleCompile")
+                                                : extension.addGradleCompile
+      }
     }
   }
 }

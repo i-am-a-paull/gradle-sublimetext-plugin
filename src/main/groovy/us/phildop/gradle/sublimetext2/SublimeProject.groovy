@@ -16,13 +16,14 @@ public class SublimeProject {
 	def defaultFolderExcludePatterns = []
 	boolean generateSublimeJavaClasspath = false
 	boolean generateSettings = false
-	def classpath = []
+  boolean addGradleCompile = false
 
   SublimeProject(Project project,
   							 List<String> defaultFileExcludePatterns, 
   							 List<String> defaultFolderExcludePatterns,
   							 boolean addDependencyProjects,
-  							 boolean generateSublimeJavaClasspath) {
+  							 boolean generateSublimeJavaClasspath,
+                 boolean addGradleCompile) {
   	this.mainProject = project
   	this.defaultFileExcludePatterns = defaultFileExcludePatterns
   	this.defaultFolderExcludePatterns = defaultFolderExcludePatterns
@@ -58,22 +59,47 @@ public class SublimeProject {
   	})
   }
 
+  private List<Closure> getBuildSystems() {
+    def gradleCmd = new File(new File(mainProject.gradle.gradleHomeDir, 'bin'), 'gradle').toString()
+    def buildSystems = []
+    
+    buildSystems.add({
+      cmd gradleCmd, 'compileJava'
+      name String.format('Gradle %s', mainProject.name)
+      working_dir mainProject.path
+    })
+
+    buildSystems
+  }
+
+  private List<String> getClasspathEntries() {
+    def classpath = new ProjectClasspath(mainProject)
+    Array.array(classpath.classpathEntries).map({it.toString()} as F).array().toList()
+  }
+
   String toString() {
   	def json = new JsonBuilder()
 
-    json { 
+    json {
+
+      if (addGradleCompile) {
+        def buildSystems = getBuildSystems()
+        build_systems buildSystems
+      }
+
     	folders projFolders
 
     	if (generateSettings) {
-    		settings {
-		    	if (generateSublimeJavaClasspath) {
-		    		def classpath = new ProjectClasspath(mainProject)
-		    		def cpEntries = Array.array(classpath.classpathEntries).map({it.toString()} as F).array().toList()
-
+      	settings {
+		  
+        	if (generateSublimeJavaClasspath) {
+            def cpEntries = getClasspathEntries()
 		    		sublimejava_classpath cpEntries
 		    	}
-    		}
-    	}
+    	
+      	}
+      }
+
     }
 
     json.toPrettyString()
