@@ -34,6 +34,9 @@ sublimeText {
 
   // if set to true, generate classpath for quarnster's SublimeJava plugin
   generateSublimeJavaClasspath = true
+
+  // if set to true, generate build system that calls gradle compileJava on project
+  addGradleCompile = true
 }
 ```
 On the command line issue the following command:
