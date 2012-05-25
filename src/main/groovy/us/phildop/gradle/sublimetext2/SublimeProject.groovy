@@ -29,6 +29,7 @@ public class SublimeProject {
   	this.defaultFolderExcludePatterns = defaultFolderExcludePatterns
   	this.generateSublimeJavaClasspath = generateSublimeJavaClasspath
   	this.generateSettings = generateSublimeJavaClasspath
+    this.addGradleCompile = addGradleCompile
 
   	addFolder(project)
   	if (addDependencyProjects) {
@@ -66,15 +67,14 @@ public class SublimeProject {
     buildSystems.add({
       cmd gradleCmd, 'compileJava'
       name String.format('Gradle %s', mainProject.name)
-      working_dir mainProject.path
+      working_dir mainProject.projectDir.toString()
     })
 
     buildSystems
   }
 
   private List<String> getClasspathEntries() {
-    def classpath = new ProjectClasspath(mainProject)
-    Array.array(classpath.classpathEntries).map({it.toString()} as F).array().toList()
+    Array.array(new ProjectClasspath(mainProject).classpathEntries).map({it.toString()} as F).array().toList()
   }
 
   String toString() {
@@ -83,7 +83,6 @@ public class SublimeProject {
     json {
 
       if (addGradleCompile) {
-        def buildSystems = getBuildSystems()
         build_systems buildSystems
       }
 
@@ -93,8 +92,7 @@ public class SublimeProject {
       	settings {
 		  
         	if (generateSublimeJavaClasspath) {
-            def cpEntries = getClasspathEntries()
-		    		sublimejava_classpath cpEntries
+		    		sublimejava_classpath classpathEntries
 		    	}
     	
       	}
