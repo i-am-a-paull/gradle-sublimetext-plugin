@@ -65,9 +65,10 @@ public class SublimeProject {
     def buildSystems = []
     
     buildSystems.add({
-      cmd gradleCmd, 'compileJava'
+      cmd gradleCmd, 'compileJava', '-q'
       name String.format('Gradle %s', mainProject.name)
       working_dir mainProject.projectDir.toString()
+      file_regex '^(...*?.java):([0-9]*)'
     })
 
     buildSystems
