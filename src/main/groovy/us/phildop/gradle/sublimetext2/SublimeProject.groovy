@@ -1,8 +1,6 @@
 package us.phildop.gradle.sublimetext2
 
 import groovy.json.JsonBuilder
-import fj.F
-import fj.data.Array
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.ProjectDependency
@@ -75,7 +73,7 @@ public class SublimeProject {
   }
 
   private List<String> getClasspathEntries() {
-    Array.array(new ProjectClasspath(mainProject).classpathEntries).map({it.toString()} as F).array().toList()
+    new ProjectClasspath(mainProject).classpathEntries.collect {it.toString()}
   }
 
   String toString() {
