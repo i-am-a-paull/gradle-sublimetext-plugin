@@ -14,7 +14,7 @@ buildscript {
       url 'http://phildop.us/m2repo'
     }
     dependencies {
-      classpath 'us.phildop:gradle-sublimetext-plugin:0.3'
+      classpath 'us.phildop:gradle-sublimetext-plugin:0.4'
     }
   }
 }
