@@ -32,7 +32,7 @@ class SublimeText2Task extends DefaultTask {
                                      getEclipseJavaFormatterConfigFile(),
                                      getEclipseJavaFormatterSortImportsOrder(),
                                      getEclipseJavaFormatterRestoreLineEndings())
-    File destination = new File(project.projectDir, String.format("%s.sublime-project", getSublimeProjectName()))
+    File destination = new File(project.projectDir, sprintf("%s.sublime-project", getSublimeProjectName()))
     destination.write st2Proj.toString()
   }
 

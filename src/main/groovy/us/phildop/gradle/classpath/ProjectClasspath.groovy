@@ -22,7 +22,7 @@ class ProjectClasspath {
 
   private void collectClasspathEntries(configuration) {
     def jarDeps = []
-    
+
     for(dep in configuration.allDependencies) {
       if (dep instanceof ProjectDependency) {
         projectDirs.add(getProjectClassesDir(dep.dependencyProject))

@@ -8,15 +8,15 @@ import us.phildop.gradle.classpath.ProjectClasspath
 
 public class SublimeProject {
 
-	Project mainProject = null
+  Project mainProject = null
   def dependencyProjects = []
 
-	def defaultFileExcludePatterns = []
-	def defaultFolderExcludePatterns = []
+  def defaultFileExcludePatterns = []
+  def defaultFolderExcludePatterns = []
   boolean addDependencyProjects = false
-	boolean generateSublimeJavaClasspath = false
+  boolean generateSublimeJavaClasspath = false
   boolean generateSublimeJavaSrcpath = false
-	boolean generateSettings = false
+  boolean generateSettings = false
   boolean addGradleCompile = false
   boolean addSublimeLinterConfig = false
   String eclipseJavaFormatterConfigFile = null
@@ -27,23 +27,23 @@ public class SublimeProject {
   def srcpathEntries = []
 
   SublimeProject(Project project,
-  							 List<String> defaultFileExcludePatterns,
-  							 List<String> defaultFolderExcludePatterns,
-  							 boolean addDependencyProjects,
-  							 boolean generateSublimeJavaClasspath,
+                 List<String> defaultFileExcludePatterns,
+                 List<String> defaultFolderExcludePatterns,
+                 boolean addDependencyProjects,
+                 boolean generateSublimeJavaClasspath,
                  boolean generateSublimeJavaSrcpath,
                  boolean addGradleCompile,
                  boolean addSublimeLinterConfig,
                  String eclipseJavaFormatterConfigFile,
                  List<String> eclipseJavaFormatterSortImportsOrder,
                  boolean eclipseJavaFormatterRestoreLineEndings) {
-  	this.mainProject = project
-  	this.defaultFileExcludePatterns = defaultFileExcludePatterns
-  	this.defaultFolderExcludePatterns = defaultFolderExcludePatterns
+    this.mainProject = project
+    this.defaultFileExcludePatterns = defaultFileExcludePatterns
+    this.defaultFolderExcludePatterns = defaultFolderExcludePatterns
     this.addDependencyProjects = addDependencyProjects
-  	this.generateSublimeJavaClasspath = generateSublimeJavaClasspath
+    this.generateSublimeJavaClasspath = generateSublimeJavaClasspath
     this.generateSublimeJavaSrcpath = generateSublimeJavaSrcpath
-  	this.generateSettings = generateSublimeJavaClasspath ||
+    this.generateSettings = generateSublimeJavaClasspath ||
                             generateSublimeJavaSrcpath ||
                             addSublimeLinterConfig ||
                             eclipseJavaFormatterConfigFile != null
@@ -60,7 +60,7 @@ public class SublimeProject {
       classpathEntries = new ProjectClasspath(mainProject).classpathEntries.collect {it.toString()}
     }
 
-  	if (addDependencyProjects || generateSublimeJavaSrcpath || addSublimeLinterConfig) {
+    if (addDependencyProjects || generateSublimeJavaSrcpath || addSublimeLinterConfig) {
       collectDependencyProjects(project.configurations.compile)
 
       if (generateSublimeJavaSrcpath || addSublimeLinterConfig) {
@@ -68,16 +68,16 @@ public class SublimeProject {
           [proj.projectDir.toString(), 'src', 'main', 'java'].join(File.separator)
         }
       }
-  	}
+    }
   }
 
   private void collectDependencyProjects(configuration) {
-  	for(dep in configuration.allDependencies) {
-  		if (dep instanceof ProjectDependency) {
-  			dependencyProjects.add(dep.dependencyProject)
-  			collectDependencyProjects(dep.projectConfiguration)
-  		}
-  	}
+    for(dep in configuration.allDependencies) {
+      if (dep instanceof ProjectDependency) {
+        dependencyProjects.add(dep.dependencyProject)
+        collectDependencyProjects(dep.projectConfiguration)
+      }
+    }
   }
 
   private List<Closure> getBuildSystems() {
@@ -86,7 +86,7 @@ public class SublimeProject {
     [
       {
         cmd gradleCmd, 'compileJava', '-q'
-        name String.format('Gradle %s', mainProject.name)
+        name sprintf('Gradle %s', mainProject.name)
         working_dir mainProject.projectDir.toString()
         file_regex '^(...*?.java):([0-9]*)'
       }
@@ -131,7 +131,7 @@ public class SublimeProject {
   }
 
   String toString() {
-  	def json = new JsonBuilder()
+    def json = new JsonBuilder()
 
     json {
 
@@ -139,14 +139,14 @@ public class SublimeProject {
         build_systems buildSystems
       }
 
-    	folders projectFolders
+      folders projectFolders
 
-    	if (generateSettings) {
-      	settings {
+      if (generateSettings) {
+        settings {
 
-        	if (generateSublimeJavaClasspath) {
-		    		sublimejava_classpath classpathEntries
-		    	}
+          if (generateSublimeJavaClasspath) {
+            sublimejava_classpath classpathEntries
+          }
 
           if (generateSublimeJavaSrcpath) {
             sublimejava_srcpath srcpathEntries
@@ -176,7 +176,7 @@ public class SublimeProject {
             }
           }
 
-      	}
+        }
       }
 
     }
