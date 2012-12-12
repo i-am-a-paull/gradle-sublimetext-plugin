@@ -14,7 +14,7 @@ buildscript {
       url 'http://phildop.us/m2repo'
     }
     dependencies {
-      classpath 'us.phildop:gradle-sublimetext-plugin:0.4'
+      classpath 'us.phildop:gradle-sublimetext-plugin:0.5'
     }
   }
 }
@@ -32,11 +32,20 @@ sublimeText {
   // If set to true, any dependency project folders will be added
   addDependencyProjects = true
 
-  // if set to true, generate classpath for quarnster's SublimeJava plugin
+  // if set to true, generate paths for [SublimeJava|https://github.com/quarnster/SublimeJava]
   generateSublimeJavaClasspath = true
+  generateSublimeJavaSrcpath = true
 
   // if set to true, generate build system that calls gradle compileJava on project
   addGradleCompile = true
+
+  // if set to true, generate configuration for [SublimeLinter|https://github.com/SublimeLinter/SublimeLinter]
+  addSublimeLinterConfig = true
+
+  // options for [EclipseJavaFormatter|https://github.com/phildopus/EclipseJavaFormatter]
+  eclipseJavaFormatterConfigFile = "/path/to/config/org.eclipse.jdt.core.prefs"
+  eclipseJavaFormatterSortImportsOrder = ["java", "javax", "org", "com"]
+  eclipseJavaFormatterRestoreLineEndings = true
 }
 ```
 On the command line issue the following command:
