@@ -9,7 +9,12 @@ class SublimeText2PluginExtension {
   List<String> defaultFolderExcludePatterns = []
   boolean addDependencyProjects = false
   boolean generateSublimeJavaClasspath = false
+  boolean generateSublimeJavaSrcpath = false
   boolean addGradleCompile = false
+  boolean addSublimeLinterConfig = false
+  String eclipseJavaFormatterConfigFile = null
+  List<String> eclipseJavaFormatterSortImportsOrder = []
+  boolean eclipseJavaFormatterRestoreLineEndings = false
 
   public SublimeText2PluginExtension(Project project) {
     sublimeProjectName = project.name

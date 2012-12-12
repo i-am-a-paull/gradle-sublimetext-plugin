@@ -11,16 +11,27 @@ class SublimeText2Task extends DefaultTask {
   List<String> defaultFolderExcludePatterns
   boolean addDependencyProjects
   boolean generateSublimeJavaClasspath
+  boolean generateSublimeJavaSrcpath
   boolean addGradleCompile
+  boolean addSublimeLinterConfig
+  String eclipseJavaFormatterConfigFile
+  List<String> eclipseJavaFormatterSortImportsOrder
+  boolean eclipseJavaFormatterRestoreLineEndings
+
 
   @TaskAction
   void run() {
-    def st2Proj = new SublimeProject(project, 
-                                     getDefaultFileExcludePatterns(), 
-                                     getDefaultFolderExcludePatterns(), 
-                                     getAddDependencyProjects(), 
+    def st2Proj = new SublimeProject(project,
+                                     getDefaultFileExcludePatterns(),
+                                     getDefaultFolderExcludePatterns(),
+                                     getAddDependencyProjects(),
                                      getGenerateSublimeJavaClasspath(),
-                                     getAddGradleCompile())
+                                     getGenerateSublimeJavaSrcpath(),
+                                     getAddGradleCompile(),
+                                     getAddSublimeLinterConfig(),
+                                     getEclipseJavaFormatterConfigFile(),
+                                     getEclipseJavaFormatterSortImportsOrder(),
+                                     getEclipseJavaFormatterRestoreLineEndings())
     File destination = new File(project.projectDir, String.format("%s.sublime-project", getSublimeProjectName()))
     destination.write st2Proj.toString()
   }
