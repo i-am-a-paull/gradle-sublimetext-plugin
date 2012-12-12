@@ -91,6 +91,7 @@ If set to true, generate configuration for [SublimeLinter](https://github.com/Su
 ```groovy
 sublimeText {
   addSublimeLinterConfig = true
+}
 ```
 
 
