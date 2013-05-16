@@ -11,7 +11,7 @@ apply plugin: 'sublimeText'
 buildscript {
   repositories {
     maven {
-      url 'http://phildop.us/m2repo'
+      url 'http://dl.bintray.com/phildopus/maven'
     }
     dependencies {
       classpath 'us.phildop:gradle-sublimetext-plugin:0.5'
