@@ -2,7 +2,12 @@ apply plugin: 'groovy'
 apply plugin: 'maven'
 
 group 'us.phildop'
-version '0.5'
+version '0.5.1'
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+  classifier = 'src'
+  from sourceSets.main.allSource
+}
 
 dependencies {
   compile gradleApi()
